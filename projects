@@ -1,0 +1,254 @@
+using namespace std;
+
+// Function Prototype
+bool populateArrays(string fileName, int netIDArray[], string majorArray[],double gpaArray[],int size, int &numRecords);
+void display(int netIDArray[], string majorArray[], double gpaArray[], int numRecords);
+void findLowestGPA(int netIDArray[], string majorArray[], double gpaArray[], int numRecords);
+void findHighestGPA(int netIDArray[], string majorArray[], double gpaArray[], int numRecords);
+void searchNetID(int netIDArray[],string majorArray[], double gpaArray[], int numRecords);
+
+// start main function()
+int main()
+{
+// Variable definition
+    int netIDArray[15];
+    string majorArray[15];
+    double gpaArray[15];
+    int size = 15;
+    int numRecords;
+    string fileName;
+
+    numRecords = 0;
+
+// Program starts
+    cout << "Enter file name: "; // Prompt the user
+    cin >> fileName;    // User input of file
+
+
+
+// Calling function
+    populateArrays(fileName, netIDArray, majorArray, gpaArray, size, numRecords);
+    display(netIDArray, majorArray, gpaArray, numRecords);
+    findLowestGPA(netIDArray, majorArray, gpaArray, numRecords-1);
+    findHighestGPA(netIDArray, majorArray, gpaArray, numRecords-1);
+    searchNetID(netIDArray, majorArray, gpaArray, numRecords);
+    return 0;
+}
+// end main function()
+
+
+// Function Definition
+bool populateArrays(string fileName, int netIDArray[], string majorArray[], double gpaArray[], int size, int &numRecords)
+// start poluateArray function
+{
+    // Variable definition
+    ifstream fileRead;
+    numRecords = 0;   // reseting numRecords
+
+    fileRead.open(fileName);     // open file
+
+    // Using If expression
+    if(!fileRead)
+    {
+        cout << endl;
+        cout << "NetID not found" << endl;
+        return 1;
+    }
+
+    // Using While expression
+    while(!fileRead.eof() && numRecords < size)
+    {
+        fileRead >> netIDArray[numRecords] >> majorArray[numRecords] >> gpaArray[numRecords];
+        numRecords++;
+    }
+
+    fileRead.close();      // close file
+    return 0;
+}
+// end poluateArray function
+
+void display(int netIDArray[], string majorArray[], double gpaArray[], int numRecords)
+// start display function
+{
+    cout << "Number of records = " << numRecords-1 << endl;
+    cout << endl;
+    cout << "******" << endl;
+    cout << "Part 1" << endl;
+    cout << "******" << endl;
+    cout << "NetID array" << endl;
+    cout << "-----------" << endl;
+
+    // Using for expression
+    for( int i = 1; i < numRecords; i++)
+    {
+        // Using if/else expression
+        if (i % 3 == 0)    // this helps print out only the first 3 on one line
+        {
+            cout << "netIDArray["<<i-1<<"] = " << netIDArray[i-1] << endl;
+        }
+        else
+        {
+            cout << "netIDArray["<<i-1<<"] = " << netIDArray[i-1];
+            if(i!=numRecords-1)  // helps with putting comma only on areas that have info after
+            {
+                cout << ", ";
+            }
+        }
+    }
+
+    cout << endl;
+    cout << endl;
+    cout << "Major array" << endl;
+    cout << "-----------" << endl;
+
+    // Using for expression
+    for( int j = 1; j < numRecords; j++)
+    {
+        // Using if/else expression
+        if (j % 3 == 0) // this helps print out only the first 3 on one line
+        {
+            cout << "majorArray["<<j-1<<"] = " << majorArray[j-1] << endl;
+        }
+        else
+        {
+            cout << "majorArray["<<j-1<<"] = " << majorArray[j-1] ;
+            if(j!=numRecords-1)  // helps with putting comma only on areas that have info after
+            {
+                cout << ", ";
+            }
+        }
+    }
+
+    cout << endl;
+    cout << endl;
+    cout << "GPA array" << endl;
+    cout << "---------" << endl;
+
+    // Using for expression
+    for( int k = 1; k < numRecords; k++)
+    {
+        // Using if/else expression
+        if (k % 3 == 0) // this helps print out only the first 3 on one line
+        {
+            cout << "gpaArray["<<k-1<<"] = " << gpaArray[k-1] << endl;
+        }
+        else
+        {
+            cout << "gpaArray["<<k-1<<"] = " << gpaArray[k-1];
+            if(k!=numRecords-1)  // helps with putting comma only on areas that have info after
+            {
+                cout << ", ";
+            }
+        }
+    }
+}
+// end display function
+
+void findLowestGPA(int netIDArray[], string majorArray[], double gpaArray[], int numRecords)
+// start findLowestGPA function
+{
+    double lowestGPA = gpaArray[0];
+    int lowest = 0;
+
+    // Using for expression
+    for (int i = 1; i < numRecords; i++)
+    {
+        // Using if expression
+        if(gpaArray[i] < lowestGPA)
+        {
+            lowestGPA = gpaArray[i];
+            lowest = i;
+        }
+    }
+    cout << endl;
+    cout << endl;
+    cout << "Lowest GPA" << endl;
+    cout << "----------" << endl;
+    cout << "NetID is " << netIDArray[lowest]
+         << ", major is " << majorArray[lowest]
+         << ", GPA = " << gpaArray[lowest]
+         << endl;
+}
+// end findLowestGPA function
+
+void findHighestGPA(int netIDArray[], string majorArray[], double gpaArray[], int numRecords)
+// start findHighestGPA function
+{
+    double highestGPA = gpaArray[0];
+    int highest = 0;
+
+    // Using for expression
+    for (int i = 1; i < numRecords; i++)
+    {
+        // Using if expression
+        if(gpaArray[i] > highestGPA)
+        {
+            highestGPA = gpaArray[i];
+            highest = i;
+        }
+    }
+    cout << endl;
+    cout << "Highest GPA" << endl;
+    cout << "-----------" << endl;
+    cout << "NetID is " << netIDArray[highest]
+         << ", major is " << majorArray[highest]
+         << ", GPA = " << gpaArray[highest]
+         << endl;
+}
+// end findHighestGPA function
+
+void searchNetID(int netIDArray[],string majorArray[], double gpaArray[], int numRecords)
+// start searchNetID function
+{
+    // Variable definition
+    int id;
+
+    cout << endl;
+    cout << "Search on student's netID" <<endl;
+    cout << "-------------------------" << endl;
+
+    // using do expression
+    do
+    {
+        int locate = -1;
+
+        cout << "Input student's netID, -1 to quit: ";
+        cin >> id;
+
+        // Using if expression
+        if(id == -1)
+        {
+            break;
+        }
+
+        // Using for expression
+        for (int i = 0; i < numRecords; i++)
+        {
+            if(netIDArray[i] == id)
+            {
+                locate = i;
+                break;
+            }
+        }
+
+        // Using if/else expression
+        if(locate == -1)
+        {
+            cout << "NetID not found" << endl;
+            cout << endl;
+        }
+
+        else
+        {
+            cout << "NetID is " << netIDArray[locate]
+                 << ", major is " << majorArray[locate]
+                 << ", GPA = " << gpaArray[locate]
+                 << endl;
+            cout << endl;
+        }
+    }
+    while(1);
+    // end do while loop
+}
+// end searchNetID function
+// end function definition
